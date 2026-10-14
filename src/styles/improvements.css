@@ -30,6 +30,12 @@
 .content-card .link-arrow {
   margin-top: auto;
 }
+.content-card > .btn {
+  margin-top: auto;
+}
+.content-card > .link-arrow {
+  min-height: 44px;
+}
 .content-card .mini-ic {
   width: 44px;
   height: 44px;
@@ -61,7 +67,7 @@
 .reading-copy {
   display: grid;
   gap: 22px;
-  max-width: 72ch;
+  width: 100%;
   min-width: 0;
 }
 .reading-copy > h2:not(:first-child) {
@@ -178,6 +184,58 @@
   flex-wrap: wrap;
   gap: 16px;
 }
+.guide-links .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.4;
+  padding-block: 14px;
+}
+.hero-ctas,
+.phero-ctas,
+.cta-actions,
+.sd-actions {
+  max-width: 100%;
+}
+.hero-ctas .btn,
+.phero-ctas .btn,
+.cta-actions .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.4;
+  padding-block: 14px;
+}
+.reading-copy,
+.reading-aside,
+.content-card,
+.contact-card,
+.fcard,
+.brief,
+.phero-copy,
+.f-brand,
+.f-col {
+  min-width: 0;
+}
+.content-card p,
+.reading-copy p,
+.f-contact a {
+  overflow-wrap: anywhere;
+}
+.f-col ul + ul {
+  margin-top: 10px;
+}
+.contact-choice {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.enquiry-grid,
+.start-grid {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+}
+.enquiry-grid .reading-aside,
+.start-grid .brief {
+  align-self: start;
+}
 .site-header .nav-link {
   padding-inline: 12px;
 }
@@ -257,5 +315,65 @@
   }
   .reading-layout {
     gap: 32px;
+  }
+}
+@media (max-width: 980px) {
+  .ptabs,
+  .ppanel {
+    grid-template-columns: 1fr;
+  }
+  .ptab-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 0;
+    overflow: visible;
+    border-bottom: 0;
+    border-left: 2px solid var(--line);
+  }
+  .ptab-list .ptab {
+    width: 100%;
+    margin-left: -2px;
+    padding: 14px 20px;
+    white-space: normal;
+    border-bottom: 0;
+    border-left: 2px solid transparent;
+  }
+  .ptab-list .ptab[aria-selected='true'] {
+    border-left-color: var(--brand);
+  }
+  .enquiry-grid,
+  .start-grid {
+    grid-template-columns: 1fr;
+  }
+  .enquiry-grid .reading-aside,
+  .start-grid .brief {
+    position: static;
+  }
+}
+html {
+  scroll-padding-top: calc(var(--header-height, 81px) + 16px);
+}
+.reading-aside,
+.brief {
+  top: calc(var(--header-height, 81px) + 24px);
+}
+.reading-copy > p,
+.guide-section > p {
+  max-width: 72ch;
+}
+.svc-list,
+.svc-detail {
+  min-width: 0;
+  max-width: 100%;
+}
+.sd-actions .btn {
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.4;
+  padding-block: 12px;
+}
+@media (max-width: 900px) {
+  .svc-body {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

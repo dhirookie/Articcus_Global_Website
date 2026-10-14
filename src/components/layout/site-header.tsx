@@ -46,6 +46,23 @@ export function SiteHeader() {
   };
 
   useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const measure = () =>
+      document.documentElement.style.setProperty(
+        '--header-height',
+        `${header.getBoundingClientRect().height}px`,
+      );
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    measure();
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty('--header-height');
+    };
+  }, []);
+
+  useEffect(() => {
     const scroll = () => setScrolled(window.scrollY > 8);
     const click = (event: MouseEvent) => {
       if (
@@ -61,7 +78,7 @@ export function SiteHeader() {
       setMega(false);
       setDrawer(false);
     };
-    const media = matchMedia('(min-width: 1081px)');
+    const media = matchMedia('(min-width: 1181px)');
     const resize = () => {
       if (media.matches) setDrawer(false);
     };

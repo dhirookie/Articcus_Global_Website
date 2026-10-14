@@ -436,22 +436,30 @@ textarea {
   border-bottom-color: var(--line);
 }
 .h-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 20px;
-  min-height: 72px;
+  min-height: 80px;
 }
 .brand {
   display: inline-flex;
   align-items: center;
   padding: 4px 0;
   text-decoration: none;
+  justify-self: start;
+  min-height: 44px;
+}
+.site-header .brand .logo {
+  transform: translateY(-5px);
 }
 .nav {
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-left: 12px;
+  justify-content: center;
+  margin-left: 0;
+  white-space: nowrap;
 }
 .nav-link {
   display: inline-flex;
@@ -493,7 +501,9 @@ textarea {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: auto;
+  justify-self: end;
+  margin-left: 0;
+  white-space: nowrap;
 }
 .menu-btn {
   display: none;
@@ -513,7 +523,10 @@ textarea {
 .menu-btn[aria-expanded='true'] .i-close {
   display: block;
 }
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
+  .h-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
   .nav {
     display: none;
   }
@@ -637,7 +650,7 @@ textarea {
   position: fixed;
   left: 0;
   right: 0;
-  top: calc(72px + env(safe-area-inset-top, 0px));
+  top: calc(var(--header-height, 81px) + env(safe-area-inset-top, 0px));
   bottom: 0;
   z-index: 49;
   overflow-y: auto;
@@ -686,7 +699,7 @@ textarea {
   gap: 10px;
   margin-top: 20px;
 }
-@media (min-width: 1081px) {
+@media (min-width: 1181px) {
   .drawer {
     display: none !important;
   }

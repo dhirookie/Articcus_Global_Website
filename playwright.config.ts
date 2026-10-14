@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
   snapshotPathTemplate:
-    '{testDir}/__screenshots__/{testFileName}/{arg}-{projectName}{ext}',
+    '{testDir}/__screenshots__/{testFileName}/{arg}-{projectName}-{platform}{ext}',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -23,7 +23,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run start -- --hostname 127.0.0.1 --port 3100',
+    command:
+      'node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3100',
     url: 'http://127.0.0.1:3100',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

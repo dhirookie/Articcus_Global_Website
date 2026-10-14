@@ -24,7 +24,7 @@ These are aggregate website events, not a customer-level CRM funnel. Configure b
 
 ## QA and performance
 
-Run `npm run check`, `npm run format:check`, and `npm run test:e2e`. CI includes desktop and mobile flows, axe accessibility checks and screenshot comparison. Visual baselines are versioned in `tests/e2e/__screenshots__`. Review intended design changes before updating them with `npx playwright test visual.spec.ts --update-snapshots`.
+Run `npm run check`, `npm run format:check`, and `npm run test:e2e`. Ubuntu CI runs all functional, responsive layout and axe accessibility checks. A separate Windows CI job compares desktop and mobile screenshots against the Windows Chromium baselines. Reference filenames include the platform; screenshots from different operating systems are not interchangeable because font rendering can differ. Visual baselines are versioned in `tests/e2e/__screenshots__`. On Windows, review intended design changes before updating them with `npx playwright test visual.spec.ts --update-snapshots`. Use `npm run test:e2e:functional` for platform-independent checks and `npm run test:e2e:visual` for Windows screenshot checks.
 
 Automated accessibility tests are a baseline, not a compliance certificate. Manually check keyboard operation, zoom, focus visibility, screen-reader announcements and real mobile devices. Browser checks verify rendering and behavior, not field performance. With consented measurement, review the 75th percentile separately for desktop and mobile: LCP at most 2.5 seconds, INP at most 200 milliseconds and CLS at most 0.1. Use host monitoring for error rates and availability.
 
