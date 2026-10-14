@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { leadSchema } from '@/features/contact/lead-schema';
 import { deliverLead } from '@/server/lead-delivery';
+import { limitLead } from '@/server/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -57,9 +58,27 @@ export async function POST(request: Request) {
       503,
     );
   const reference = `ART-${(idempotencyKey || crypto.randomUUID()).toUpperCase()}`;
+  if (process.env.NODE_ENV === 'production') {
+    const rate = limitLead(request);
+    if (!rate.allowed)
+      return NextResponse.json(
+        {
+          message:
+            'Too many enquiries. Please wait a few minutes or email hello@articcus.com.',
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rate.retryAfter),
+            'Cache-Control': 'no-store',
+          },
+        },
+      );
+  }
   try {
     await deliverLead(parsed.data, reference);
   } catch {
+    console.error('Lead delivery failed', { reference });
     return failure(
       'We could not send your brief. Please try again or email hello@articcus.com.',
       502,

@@ -3,13 +3,29 @@ import { test, expect, type Page } from '@playwright/test';
 const pages = [
   [
     '/',
-    'The technology partner for businesses that have outgrown manual operations',
+    'Replace spreadsheets and manual work with systems built around your business',
   ],
   ['/services', 'Everything you need, from a first website to a full platform'],
   ['/industries', ''],
   ['/how-we-work', ''],
   ['/pricing', ''],
   ['/contact', "Tell us what's slowing you down"],
+  ['/about', 'Technology that fits the work your business actually does'],
+  ['/solutions', 'See how a practical first project could work'],
+  ['/solutions/order-to-invoice', 'From a dealer order to an invoice'],
+  [
+    '/services/website',
+    'Business websites built to turn interest into enquiries',
+  ],
+  ['/services/webapp', 'Custom business software for the way your team works'],
+  ['/services/automation', 'Business automation that reduces repeated work'],
+  ['/services/ai', 'AI assistants with a defined job and clear boundaries'],
+  ['/guides', 'Make the next technology decision with a clearer picture'],
+  [
+    '/guides/what-affects-project-cost',
+    'What affects a website or software project quote?',
+  ],
+  ['/privacy', 'How information is used on this website'],
 ] as const;
 
 for (const [path, heading] of pages) {
@@ -170,7 +186,98 @@ test('mobile menu traps focus and closes with Escape', async ({
   await page.goto('/');
   await page.getByRole('button', { name: 'Open menu' }).click();
   await expect(page.locator('#drawer')).toBeVisible();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.getByRole('button', { name: 'Close menu' })).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(
+    page.locator('#drawer a[href="tel:+94775701404"]'),
+  ).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Close menu' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(page.locator('#drawer')).toBeHidden();
   await expect(page.getByRole('button', { name: 'Open menu' })).toBeFocused();
+});
+
+test('short enquiry needs no service selection and sends only its own form data', async ({
+  page,
+}) => {
+  await page.goto('/contact#enquiry');
+  await page.locator('#quick-enquiry-form button[type="submit"]').click();
+  await expect(page.locator('#q-email')).toHaveAttribute(
+    'aria-invalid',
+    'true',
+  );
+  await page.locator('#q-name').fill('Jane Doe');
+  await page.locator('#q-email').fill('jane@example.com');
+  await page
+    .locator('#q-problem')
+    .fill('We want to stop entering orders twice.');
+  let captured: Record<string, unknown> = {};
+  await page.route('**/api/leads', async (route) => {
+    captured = route.request().postDataJSON();
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({ reference: 'ART-QUICK' }),
+    });
+  });
+  await page.locator('#quick-enquiry-form button[type="submit"]').click();
+  await expect(
+    page.getByRole('heading', { name: 'Your enquiry has been received' }),
+  ).toBeVisible();
+  expect(captured).toMatchObject({
+    mode: 'enquiry',
+    services: [],
+    company: '',
+    email: 'jane@example.com',
+  });
+  expect(
+    await page.evaluate(() => sessionStorage.getItem('articcus.brief')),
+  ).not.toContain('jane@example.com');
+});
+
+test('short enquiry retains details and reuses the key after a delivery failure', async ({
+  page,
+}) => {
+  await page.goto('/contact#enquiry');
+  await page.locator('#q-name').fill('Jane');
+  await page.locator('#q-email').fill('jane@example.com');
+  await page
+    .locator('#q-problem')
+    .fill('Our invoice process needs improvement.');
+  const keys: string[] = [];
+  await page.route('**/api/leads', async (route) => {
+    keys.push(route.request().headers()['x-idempotency-key'] || '');
+    await route.fulfill({
+      status: keys.length === 1 ? 502 : 201,
+      contentType: 'application/json',
+      body: JSON.stringify(
+        keys.length === 1
+          ? { message: 'Please try again.' }
+          : { reference: 'ART-RETRY' },
+      ),
+    });
+  });
+  await page.locator('#quick-enquiry-form button[type="submit"]').click();
+  await expect(
+    page.locator('#quick-enquiry-form [role="alert"]'),
+  ).toContainText('Please try again');
+  await expect(page.locator('#q-name')).toHaveValue('Jane');
+  await page.locator('#quick-enquiry-form button[type="submit"]').click();
+  await expect(
+    page.getByRole('heading', { name: 'Your enquiry has been received' }),
+  ).toBeVisible();
+  expect(keys).toHaveLength(2);
+  expect(keys[0]).toBeTruthy();
+  expect(keys[0]).toBe(keys[1]);
+});
+
+test('examples are labelled and unknown detail pages return 404', async ({
+  page,
+}) => {
+  await page.goto('/solutions');
+  await expect(page.locator('main')).toContainText('not client case studies');
+  const response = await page.goto('/services/not-a-service');
+  expect(response?.status()).toBe(404);
 });

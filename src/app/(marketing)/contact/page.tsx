@@ -2,6 +2,8 @@ import { pageMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import { CopyButton } from '@/components/ui/copy-button';
 import { ContactExperience } from '@/features/contact/contact-experience';
+import { QuickEnquiry } from '@/features/contact/quick-enquiry';
+import { site } from '@/config/site';
 
 export const metadata = pageMetadata(
   'Contact · Articcus',
@@ -26,14 +28,22 @@ export default function ContactPage() {
                 Tell us what&apos;s slowing you down
               </h1>
               <p className="lead">
-                Book a free 30-minute call. We reply within one working day.
+                Request a free 30-minute discovery conversation, or send a
+                detailed project brief. We aim to reply within one working day.
               </p>
               <div className="phero-ctas">
-                <a className="btn btn-primary btn-lg" href="#start">
-                  Build your project brief
+                <a
+                  className="btn btn-primary btn-lg"
+                  href="#enquiry"
+                  data-discovery
+                >
+                  Request a discovery call
                   <svg className="ic arrow" aria-hidden="true">
                     <use href="#i-arrow"></use>
                   </svg>
+                </a>
+                <a className="btn btn-outline btn-lg" href="#start">
+                  Build a project brief
                 </a>
               </div>
             </div>
@@ -112,9 +122,40 @@ export default function ContactPage() {
                   <use href="#i-ext"></use>
                 </svg>
               </a>
+              <a
+                className="link-arrow"
+                href={site.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Message us on WhatsApp
+              </a>
             </div>
           </div>
         </section>
+        <div className="wrap contact-choice">
+          <article className="content-card">
+            <h2 className="h3">Not sure where to start?</h2>
+            <p>
+              Send a short enquiry. Three required fields are enough to start a
+              conversation.
+            </p>
+            <a className="link-arrow" href="#enquiry">
+              Use the short form
+            </a>
+          </article>
+          <article className="content-card">
+            <h2 className="h3">Already have a project in mind?</h2>
+            <p>
+              Choose services, timing and business context in the detailed brief
+              below.
+            </p>
+            <a className="link-arrow" href="#start">
+              Build a project brief
+            </a>
+          </article>
+        </div>
+        <QuickEnquiry />
         <section className="sec" id="start" aria-labelledby="start-title">
           <div className="wrap">
             <div className="sec-head reveal">

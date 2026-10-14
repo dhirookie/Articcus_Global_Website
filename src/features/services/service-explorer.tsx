@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { getServiceDetail } from '@/data/service-details';
 import {
   GROUPS,
   GROUP_IDS,
@@ -161,6 +163,14 @@ export function ServiceExplorer() {
                 </div>
               </dl>
               <div className="sd-actions">
+                {getServiceDetail(service.id) && (
+                  <Link
+                    className="btn btn-outline"
+                    href={`/services/${service.id}`}
+                  >
+                    Read the scope and deliverables
+                  </Link>
+                )}
                 <BriefAction
                   className="btn btn-primary btn-add"
                   services={[service.id]}

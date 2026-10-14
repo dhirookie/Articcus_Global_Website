@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { AnalyticsSettings } from '@/features/analytics/analytics';
 
 export function SiteFooter() {
   return (
@@ -101,6 +102,9 @@ export function SiteFooter() {
               <h3 id="fc-3">Company</h3>
               <ul>
                 <li>
+                  <Link href="/about">About Articcus</Link>
+                </li>
+                <li>
                   <Link href="/how-we-work">How we work</Link>
                 </li>
                 <li>
@@ -115,14 +119,27 @@ export function SiteFooter() {
               </ul>
             </nav>
             <nav className="f-col" aria-labelledby="fc-4">
-              <h3 id="fc-4">Legal</h3>
+              <h3 id="fc-4">Resources</h3>
               <ul>
                 <li>
-                  <a href="#">Privacy policy</a>
+                  <Link href="/privacy">Website privacy</Link>
                 </li>
                 <li>
-                  <a href="#">Terms of service</a>
+                  <Link href="/pricing#agreement">Project agreements</Link>
                 </li>
+              </ul>
+              <ul>
+                <li>
+                  <Link href="/solutions">Solution examples</Link>
+                </li>
+                <li>
+                  <Link href="/guides">Project guides</Link>
+                </li>
+                {process.env.ANALYTICS_WEBHOOK_URL && (
+                  <li>
+                    <AnalyticsSettings />
+                  </li>
+                )}
               </ul>
             </nav>
           </div>

@@ -2,6 +2,7 @@ import { pageMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import { css } from '@/lib/styles';
 import { Cta } from '@/components/layout/cta';
+import { QuoteExamples } from '@/components/content/quote-examples';
 
 export const metadata = pageMetadata(
   'Pricing · Articcus',
@@ -206,8 +207,10 @@ export default function PricingPage() {
               <div>
                 <h3>How project payments work</h3>
                 <p>
-                  You pay for work you have seen. Sri Lankan clients are quoted
-                  in LKR, overseas clients in USD.
+                  A 40% advance reserves the agreed work and starts the project.
+                  The next 30% is due at the agreed mid-project milestone, and
+                  the final 30% on delivery. Sri Lankan clients are quoted in
+                  LKR, overseas clients in USD.
                 </p>
               </div>
               <div
@@ -231,7 +234,12 @@ export default function PricingPage() {
             </div>
           </div>
         </section>
-        <section className="sec tight-top" aria-labelledby="inc-title">
+        <QuoteExamples />
+        <section
+          className="sec tight-top"
+          id="agreement"
+          aria-labelledby="inc-title"
+        >
           <div className="wrap">
             <div className="fit reveal">
               <div className="split-copy">

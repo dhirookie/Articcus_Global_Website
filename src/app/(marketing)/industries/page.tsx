@@ -2,6 +2,7 @@ import { pageMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import { css } from '@/lib/styles';
 import { Cta } from '@/components/layout/cta';
+import { IndustryConsiderations } from '@/components/content/industry-considerations';
 import { IndustryGrid } from '@/features/industries/industry-grid';
 
 export const metadata = pageMetadata(
@@ -142,6 +143,7 @@ export default function IndustriesPage() {
             </div>
           </div>
         </section>
+        <IndustryConsiderations />
         <Cta />
       </main>
     </>

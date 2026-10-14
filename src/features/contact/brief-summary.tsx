@@ -73,19 +73,20 @@ export function BriefSummary({
         <ol className="next-steps">
           <li>
             <span>
-              <b>We reply within one working day</b> to book your call.
+              <b>We aim to reply within one working day</b> to arrange a
+              conversation.
             </span>
           </li>
           <li>
             <span>
               <b>A 30-minute discovery call</b>, free, with a written summary
-              within 24 hours.
+              with next steps confirmed afterwards.
             </span>
           </li>
           <li>
             <span>
-              <b>A costed estimate in 3–5 working days</b>, checked by our tech
-              lead.
+              <b>A costed estimate once the scope is understood</b>, checked by
+              our tech lead.
             </span>
           </li>
         </ol>

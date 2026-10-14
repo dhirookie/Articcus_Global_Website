@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import type { FormEventHandler, ChangeEventHandler } from 'react';
 import { css } from '@/lib/styles';
 import { ServiceChips, IndustryOptions } from './service-chips';
@@ -30,6 +31,11 @@ export function ContactFields({
       noValidate={true}
       style={css({ display: 'grid', gap: '36px' })}
     >
+      <p className="field-hint">
+        Full name, company and email are required. Choose at least one service
+        or describe the problem. A phone number is required only if you choose
+        phone or WhatsApp contact.
+      </p>
       <fieldset aria-describedby="svc-error">
         <legend className="f-step">
           <span>1</span>What do you need help with?
@@ -177,11 +183,15 @@ export function ContactFields({
         </legend>
         <div className="row2">
           <div className="field">
-            <label htmlFor="f-name">Full name</label>
+            <label htmlFor="f-name">
+              Full name <span className="required-label">Required</span>
+            </label>
             <input
               className="input"
               id="f-name"
               name="name"
+              required
+              maxLength={120}
               autoComplete="name"
               aria-describedby="f-name-error"
               aria-invalid={!!errors.name}
@@ -191,11 +201,15 @@ export function ContactFields({
             </p>
           </div>
           <div className="field">
-            <label htmlFor="f-company">Company</label>
+            <label htmlFor="f-company">
+              Company <span className="required-label">Required</span>
+            </label>
             <input
               className="input"
               id="f-company"
               name="company"
+              required
+              maxLength={200}
               autoComplete="organization"
               aria-describedby="f-company-error"
               aria-invalid={!!errors.company}
@@ -207,11 +221,15 @@ export function ContactFields({
         </div>
         <div className="row2">
           <div className="field">
-            <label htmlFor="f-email">Work email</label>
+            <label htmlFor="f-email">
+              Work email <span className="required-label">Required</span>
+            </label>
             <input
               className="input"
               id="f-email"
               name="email"
+              required
+              maxLength={254}
               type="email"
               autoComplete="email"
               placeholder="you@company.com"
@@ -233,6 +251,8 @@ export function ContactFields({
               className="input"
               id="f-phone"
               name="phone"
+              required={contact !== 'Email'}
+              maxLength={60}
               type="tel"
               autoComplete="tel"
               placeholder="+94 77 123 4567"
@@ -309,11 +329,11 @@ export function ContactFields({
           )}
         </button>
         <p className="fine">
-          We only use these details to reply to your enquiry. We never share
-          them.
+          We use your details to respond to your enquiry.{' '}
+          <Link href="/privacy">How we handle your information</Link>.
         </p>
       </div>
-      <div className="sr-only" aria-hidden="true">
+      <div hidden>
         <label htmlFor="f-website">Leave this empty</label>
         <input id="f-website" name="website" tabIndex={-1} autoComplete="off" />
       </div>

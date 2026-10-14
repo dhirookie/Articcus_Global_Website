@@ -5,6 +5,7 @@ const text = (max: number) => z.string().trim().max(max);
 
 export const leadSchema = z
   .object({
+    mode: z.enum(['brief', 'enquiry']).default('brief'),
     services: z
       .array(z.custom<ServiceId>(isServiceId, 'Choose a valid service.'))
       .max(18)
@@ -30,7 +31,7 @@ export const leadSchema = z
     problem: text(5000),
     budget: text(200),
     name: text(120).min(1, 'Enter your full name.'),
-    company: text(200).min(1, 'Enter your company name.'),
+    company: text(200),
     email: text(254).pipe(
       z.email('Enter a valid email, like name@company.com.'),
     ),
@@ -39,7 +40,24 @@ export const leadSchema = z
     website: z.string().max(0, 'Please leave this field empty.').default(''),
   })
   .superRefine((lead, context) => {
-    if (!lead.services.length && lead.problem.length < 10)
+    if (lead.mode === 'brief' && !lead.company)
+      context.addIssue({
+        code: 'custom',
+        path: ['company'],
+        message: 'Enter your company name.',
+      });
+    if (lead.mode === 'enquiry' && lead.problem.length < 10)
+      context.addIssue({
+        code: 'custom',
+        path: ['problem'],
+        message:
+          'Tell us a little about what you need (at least 10 characters).',
+      });
+    if (
+      lead.mode === 'brief' &&
+      !lead.services.length &&
+      lead.problem.length < 10
+    )
       context.addIssue({
         code: 'custom',
         path: ['services'],

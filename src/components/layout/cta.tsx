@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { site } from '@/config/site';
 
 export function Cta() {
   return (
@@ -14,20 +15,24 @@ export function Cta() {
                 Tell us what&apos;s slowing the business down
               </h2>
               <p>
-                Book a free 30-minute discovery call. You get a written summary
-                within 24 hours.
+                Start with a free 30-minute discovery conversation. Tell us
+                about one problem and we can discuss a practical next step.
               </p>
             </div>
             <div className="cta-actions">
-              <Link className="btn btn-sky btn-lg" href="/contact#start">
-                Start a project
+              <Link
+                className="btn btn-sky btn-lg"
+                href={site.discoveryHref}
+                data-discovery
+              >
+                Request a discovery call
                 <svg className="ic arrow" aria-hidden="true">
                   <use href="#i-arrow"></use>
                 </svg>
               </Link>
-              <a className="btn btn-line-light btn-lg" href="tel:+94775701404">
-                Call +94 77 570 1404
-              </a>
+              <Link className="btn btn-line-light btn-lg" href="/contact#start">
+                Build a project brief
+              </Link>
             </div>
           </div>
         </div>

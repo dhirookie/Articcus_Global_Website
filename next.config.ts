@@ -4,6 +4,7 @@ import path from 'node:path';
 const config: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  experimental: { cpus: 1 },
   turbopack: { root: path.resolve('.') },
   outputFileTracingRoot: path.resolve('.'),
   async redirects() {

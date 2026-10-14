@@ -13,6 +13,8 @@ import { useBrief } from '@/features/brief/brief-provider';
 import { ContactFields } from './contact-fields';
 import { BriefSummary } from './brief-summary';
 import { briefText } from './brief-text';
+import { submitLead } from './submit-lead';
+import { trackEvent } from '@/features/analytics/events';
 import {
   leadSchema,
   validationErrors,
@@ -111,6 +113,7 @@ export function ContactExperience() {
     setErrors({});
     inFlight.current = true;
     setPending(true);
+    trackEvent('brief_submit');
     const controller = new AbortController();
     abort.current = controller;
     const timer = setTimeout(() => controller.abort(), 15000);
@@ -118,35 +121,16 @@ export function ContactExperience() {
       const body = JSON.stringify(parsed.data);
       if (attempt.current?.body !== body)
         attempt.current = { body, key: crypto.randomUUID() };
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Idempotency-Key': attempt.current.key,
-        },
-        body,
-        signal: controller.signal,
-      });
-      const result: unknown = await response.json();
-      if (
-        !response.ok ||
-        !result ||
-        typeof result !== 'object' ||
-        !('reference' in result) ||
-        typeof result.reference !== 'string'
-      ) {
-        const message =
-          result &&
-          typeof result === 'object' &&
-          'message' in result &&
-          typeof result.message === 'string'
-            ? result.message
-            : 'We could not send your brief. Please try again or email hello@articcus.com.';
-        throw new Error(message);
-      }
-      setReceipt({ reference: result.reference, lead: parsed.data });
+      const reference = await submitLead(
+        parsed.data,
+        attempt.current.key,
+        controller.signal,
+      );
+      setReceipt({ reference, lead: parsed.data });
+      trackEvent('brief_success');
       brief.clear();
     } catch (error) {
+      trackEvent('brief_error');
       setErrors({
         form:
           error instanceof Error && error.name !== 'AbortError'
@@ -185,7 +169,7 @@ export function ContactExperience() {
               Thanks, {receipt.lead.name.split(/\s+/)[0]}. Your brief is in.
             </h3>
             <p id="done-text">
-              We will{' '}
+              We aim to{' '}
               {receipt.lead.contact === 'Email'
                 ? `email you at ${receipt.lead.email}`
                 : receipt.lead.contact === 'WhatsApp'

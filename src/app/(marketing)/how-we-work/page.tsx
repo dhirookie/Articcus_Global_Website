@@ -2,6 +2,7 @@ import { pageMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import { css } from '@/lib/styles';
 import { Cta } from '@/components/layout/cta';
+import { DeliveryExpectations } from '@/components/content/delivery-expectations';
 import { Tabs, Tab, TabPanel, TabSelectButton } from '@/components/ui/tabs';
 
 export const metadata = pageMetadata(
@@ -26,7 +27,11 @@ export default function HowWeWorkPage() {
               <h1 className="h1 sm" id="page-title">
                 From first call to launch in six clear steps
               </h1>
-              <p className="lead">No surprises on scope, price or timing.</p>
+              <p className="lead">
+                Agree the scope, price and review milestones before work starts.
+                Planning timings below are indicative; your proposal confirms
+                dates and dependencies.
+              </p>
               <div className="phero-ctas">
                 <Link className="btn btn-primary btn-lg" href="/contact#start">
                   Start with step one
@@ -491,7 +496,7 @@ export default function HowWeWorkPage() {
                       <use href="#i-check"></use>
                     </svg>
                   </span>
-                  A written summary within 24 hours of every meeting
+                  A written summary and agreed next steps after discovery
                 </li>
                 <li>
                   <span className="tick">
@@ -507,7 +512,7 @@ export default function HowWeWorkPage() {
                       <use href="#i-check"></use>
                     </svg>
                   </span>
-                  You pay for work you have seen
+                  An agreed advance, followed by milestone payments
                 </li>
                 <li>
                   <span className="tick">
@@ -568,7 +573,7 @@ export default function HowWeWorkPage() {
                   <svg className="ic" aria-hidden="true">
                     <use href="#i-clock"></use>
                   </svg>
-                  Sent within 24 hours of every discovery meeting
+                  Example of a written follow-up after discovery
                 </p>
               </figure>
             </div>
@@ -589,8 +594,11 @@ export default function HowWeWorkPage() {
                     <use href="#i-clock"></use>
                   </svg>
                 </span>
-                <h3>Replies the same working day</h3>
-                <p>Every message answered the same working day.</p>
+                <h3>A clear communication plan</h3>
+                <p>
+                  Agree the project contact, update cadence and escalation route
+                  at kickoff.
+                </p>
               </article>
               <article className="promise reveal" style={css({ '--d': '1' })}>
                 <span className="model-ic c6">
@@ -640,6 +648,7 @@ export default function HowWeWorkPage() {
             </div>
           </div>
         </section>
+        <DeliveryExpectations />
         <Cta />
       </main>
     </>

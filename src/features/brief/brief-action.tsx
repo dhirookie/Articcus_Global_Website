@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import type { ButtonHTMLAttributes } from 'react';
 import { isIndustryId, isServiceId } from '@/data/catalogue';
 import { useBrief } from './brief-provider';
+import { trackEvent } from '@/features/analytics/events';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   services: readonly string[];
@@ -30,10 +31,15 @@ export function BriefAction({
       onClick={() => {
         if (mode === 'toggle') {
           const id = ids[0];
-          if (id) brief.toggle(id);
+          if (id) {
+            if (!brief.services.includes(id)) trackEvent('brief_add', id);
+            brief.toggle(id);
+          }
           return;
         }
         brief.add(ids, isIndustryId(industry) ? industry : '');
+        for (const id of ids)
+          if (!brief.services.includes(id)) trackEvent('brief_add', id);
         router.push('/contact#start');
       }}
     >

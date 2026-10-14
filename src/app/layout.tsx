@@ -7,6 +7,8 @@ import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { IconSprite } from '@/components/layout/icon-sprite';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
+import { Analytics } from '@/features/analytics/analytics';
+import { StructuredData } from '@/components/content/structured-data';
 import '@/styles/globals.css';
 
 const displayFont = Bricolage_Grotesque({
@@ -44,8 +46,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
       <body>
+        <StructuredData
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            '@id': `${site.url}/#organization`,
+            name: site.name,
+            url: site.url,
+            email: site.email,
+            telephone: site.phone,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'No.14, Sir Baron Jayathilake Mawatha',
+              addressLocality: 'Colombo',
+              postalCode: '00100',
+              addressCountry: 'LK',
+            },
+          }}
+        />
         <IconSprite />
         <BriefProvider>
+          <Analytics enabled={Boolean(process.env.ANALYTICS_WEBHOOK_URL)} />
           <a className="skip" href="#main">
             Skip to content
           </a>

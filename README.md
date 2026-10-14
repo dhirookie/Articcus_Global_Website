@@ -1,6 +1,6 @@
 # Articcus Global Website
 
-Six-page Articcus marketing website, migrated to Next.js App Router, React, and strict TypeScript. Original branding, copy, responsive styles, SVG logo and showcase illustrations are preserved. Shared elements and interactive features are native React components; no HTML documents or embedded legacy scripts are used as application source.
+Articcus marketing website built with Next.js App Router, React, and strict TypeScript. The original branding, SVG logo and showcase illustrations are retained, with clearer positioning, detailed service scopes, labelled solution examples, buying guides, an About page, website privacy information and two enquiry paths. Shared elements and interactive features are native React components; no HTML documents or embedded legacy scripts are used as application source.
 
 ## Run locally
 
@@ -51,7 +51,11 @@ tests/
 .github/workflows/ci.yml
 ```
 
-Routes are `/`, `/services`, `/industries`, `/how-we-work`, `/pricing`, and `/contact`. Permanent redirects preserve the six old `.html` URLs and their fragments.
+Core routes are `/`, `/services`, `/industries`, `/how-we-work`, `/pricing`, and `/contact`. Additional routes are `/about`, `/solutions`, `/guides` and `/privacy`, plus prerendered service, example and guide detail pages. Permanent redirects preserve the six old `.html` URLs and their fragments. Dynamic detail pages reject unknown slugs.
+
+The short enquiry form at `/contact#enquiry` requires only a name, email and description; company is optional. The detailed brief remains at `/contact#start` and keeps service selection and business context. Neither path claims success until the receiver accepts delivery.
+
+See [content maintenance](docs/content-maintenance.md) for editorial rules and [operations](docs/operations.md) for delivery, optional booking, measurement, rate limits, monitoring and screenshot baselines. No fabricated testimonials, client case studies, team profiles, price ranges or business results are published.
 
 ## Enquiry delivery
 

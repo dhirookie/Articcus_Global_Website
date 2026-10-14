@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
-import { navigation } from '@/config/site';
+import { navigation, site } from '@/config/site';
+import { serviceHref } from '@/data/service-details';
 import { GROUPS, GROUP_IDS, SERVICES, type Service } from '@/data/catalogue';
 import { Icon, Logo } from '@/components/ui/icon';
 
@@ -18,7 +19,7 @@ function ServiceLink({
     <li>
       <Link
         className="mega-item"
-        href={`/services#${service.id}`}
+        href={serviceHref(service.id)}
         onClick={onNavigate}
       >
         <span className={`mini-ic ${service.c}`}>
@@ -131,7 +132,7 @@ export function SiteHeader() {
           <nav className="nav" aria-label="Primary">
             <button
               type="button"
-              className={`nav-link${pathname === '/services' ? ' is-current' : ''}`}
+              className={`nav-link${pathname.startsWith('/services') ? ' is-current' : ''}`}
               id="mega-btn"
               ref={megaRef}
               aria-expanded={mega}
@@ -154,15 +155,20 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="h-actions">
-            <Link className="btn btn-outline" href="/contact" onClick={close}>
-              Book a call
-            </Link>
             <Link
-              className="btn btn-primary"
+              className="btn btn-outline"
               href="/contact#start"
               onClick={close}
             >
-              Start a project
+              Build a brief
+            </Link>
+            <Link
+              className="btn btn-primary"
+              href={site.discoveryHref}
+              data-discovery
+              onClick={close}
+            >
+              Request a call
             </Link>
             <button
               type="button"
@@ -206,8 +212,13 @@ export function SiteHeader() {
                 <p>Tell us the problem and we will suggest where to start.</p>
               </div>
               <div className="mega-promo-actions">
-                <Link className="btn btn-sky" href="/contact" onClick={close}>
-                  Book a free call
+                <Link
+                  className="btn btn-sky"
+                  href={site.discoveryHref}
+                  data-discovery
+                  onClick={close}
+                >
+                  Request a discovery call
                   <Icon name="arrow" className="ic arrow" />
                 </Link>
                 <Link className="link-arrow" href="/services" onClick={close}>
@@ -271,10 +282,11 @@ export function SiteHeader() {
           <div className="drawer-ctas">
             <Link
               className="btn btn-primary btn-lg"
-              href="/contact#start"
+              href={site.discoveryHref}
+              data-discovery
               onClick={close}
             >
-              Start a project
+              Request a discovery call
             </Link>
             <a className="btn btn-outline btn-lg" href="tel:+94775701404">
               Call +94 77 570 1404

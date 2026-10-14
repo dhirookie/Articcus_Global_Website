@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { css } from '@/lib/styles';
+import { site } from '@/config/site';
 import {
   HeroProvider,
   HeroTabs,
@@ -97,29 +98,38 @@ export function HeroContent() {
             </span>
             <div className="wrap hero-copy">
               <h1 className="h1" id="hero-title">
-                The technology partner for businesses that have outgrown manual
-                operations
+                Replace spreadsheets and manual work with systems built around
+                your business
               </h1>
               <p className="lead">
-                Websites, apps, automation and AI that cut manual work and put
-                live numbers in front of you. One team, from first call to
-                long-term support.
+                Articcus builds websites, business software and automations for
+                growing teams. Start with a clear scope, review progress at
+                agreed milestones, and choose the ongoing support you need.
               </p>
               <div className="hero-ctas">
-                <Link className="btn btn-primary btn-lg" href="/contact#start">
-                  Start a project
+                <Link
+                  className="btn btn-primary btn-lg"
+                  href={site.discoveryHref}
+                  data-discovery
+                >
+                  Request a discovery call
                   <svg className="ic arrow" aria-hidden="true">
                     <use href="#i-arrow"></use>
                   </svg>
                 </Link>
-                <Link className="btn btn-outline btn-lg" href="/services">
-                  See what we build
+                <Link className="btn btn-outline btn-lg" href="/solutions">
+                  Explore solution examples
                 </Link>
               </div>
+              <ul className="hero-trust" aria-label="What to expect">
+                <li>Based in Colombo</li>
+                <li>Agreed scope and milestones</li>
+                <li>Support planned before launch</li>
+              </ul>
             </div>
             <div className="wrap tags-wrap">
               <p className="tags-lbl" id="tags-lbl">
-                What we build
+                Illustrative product interfaces
               </p>
               <HeroTabs />
             </div>
