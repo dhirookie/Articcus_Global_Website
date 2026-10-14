@@ -1,0 +1,45 @@
+/* ---------- Motion ---------- */
+.motion .reveal {
+  translate: 0 28px;
+  transition: translate 0.9s var(--ease);
+  transition-delay: calc(var(--d, 0) * 80ms);
+}
+.motion .reveal.in {
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .marq {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marq-track {
+    width: auto;
+    animation: none !important;
+  }
+  .marq-group {
+    flex-wrap: wrap;
+    padding-inline: var(--gutter);
+  }
+  .marq-group[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+/* App integration */
+.toast:empty {
+  pointer-events: none;
+}
+.form-status {
+  color: var(--bad);
+  padding: 12px 0;
+}

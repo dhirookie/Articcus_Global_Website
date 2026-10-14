@@ -1,0 +1,222 @@
+/* ---------- Industry cards ---------- */
+.ind {
+  padding-block: clamp(88px, 11vw, 128px);
+}
+.car-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.car-count {
+  color: var(--deep-muted);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.car-btn {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid var(--sky);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sky);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+}
+.car-btn:hover:not(:disabled) {
+  background: var(--sky);
+  color: var(--deep);
+}
+.car-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.car {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(272px, 26vw, 312px);
+  grid-template-rows: repeat(5, auto);
+  column-gap: 16px;
+  overflow-x: auto;
+  padding-inline: calc(max(0px, (100% - var(--wrap)) / 2) + var(--gutter));
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: calc(
+    max(0px, (100% - var(--wrap)) / 2) + var(--gutter)
+  );
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.car::-webkit-scrollbar {
+  display: none;
+}
+.car .icard {
+  scroll-snap-align: start;
+}
+.icard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 26px;
+  border-radius: var(--r-card);
+  background: var(--c);
+  color: var(--ci);
+  transition: transform 0.35s var(--ease);
+}
+.icard:hover {
+  transform: translateY(-4px);
+}
+.icard-ic {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+}
+.icard-ic .ic {
+  width: 24px;
+  height: 24px;
+}
+.icard h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.icard p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.icard .pchips span {
+  font-size: 13.5px;
+}
+.ibtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+  margin-top: auto;
+  padding: 0 16px;
+  border: 1.5px solid currentColor;
+  border-radius: var(--r-btn);
+  background: transparent;
+  color: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.ibtn {
+  text-decoration: none;
+}
+.ibtn:hover {
+  background: var(--ci);
+  color: var(--c);
+}
+.icard-more {
+  grid-column: span 2;
+  --c: var(--deep);
+  --ci: #fff;
+}
+.icard-more .icard-ic {
+  background: rgba(255, 255, 255, 0.14);
+}
+.icard-more .ibtn {
+  justify-self: start;
+  width: auto;
+  gap: 24px;
+}
+@media (max-width: 640px) {
+  .icard-more {
+    grid-column: auto;
+  }
+  .icard-more .ibtn {
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+.car-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 28px;
+}
+.car-track {
+  flex: 1 1 240px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--deep-line);
+}
+.car-fill {
+  width: 0;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--sky);
+  transition: width 0.2s;
+}
+.on-deep .link-arrow {
+  color: var(--sky);
+}
+.igrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.igrid .icard,
+.car .icard {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 14px;
+}
+.igrid .icard-ic,
+.car .icard-ic {
+  justify-self: start;
+}
+.igrid .ibtn,
+.car .ibtn {
+  align-self: end;
+}
+@media (max-width: 980px) {
+  .igrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .igrid {
+    grid-template-columns: 1fr;
+  }
+  .igrid .icard {
+    min-height: 0;
+  }
+}
+.fit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+  padding: clamp(24px, 4vw, 48px);
+  border-radius: 28px;
+  background: var(--bg-soft);
+}
+.fit .checks li {
+  font-size: 17px;
+}
+@media (max-width: 900px) {
+  .fit {
+    grid-template-columns: 1fr;
+  }
+}
