@@ -16,9 +16,10 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test
-      - run: npm run build
+      - run: npm run build:cloudflare
+      - run: npm run deploy:check
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e:functional
+      - run: npm run test:e2e:cloudflare
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

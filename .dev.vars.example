@@ -1,0 +1,7 @@
+# Copy to .dev.vars for a local Cloudflare preview. Never commit real secrets.
+NEXTJS_ENV=development
+LEAD_CLIENT_IP_HEADER=cf-connecting-ip
+LEAD_WEBHOOK_URL=
+LEAD_WEBHOOK_TOKEN=
+ANALYTICS_WEBHOOK_URL=
+ANALYTICS_WEBHOOK_TOKEN=

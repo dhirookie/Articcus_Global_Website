@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "articcus-global-website",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-15",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "workers_dev": true,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "articcus-global-website",
+    },
+  ],
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://articcus.com",
+    "LEAD_CLIENT_IP_HEADER": "cf-connecting-ip",
+  },
+  "observability": {
+    "enabled": true,
+  },
+}

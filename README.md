@@ -91,6 +91,6 @@ TypeScript enables `strict`, `noUncheckedIndexedAccess`, and `exactOptionalPrope
 
 ## Deployment
 
-Deploy as a Node.js Next.js application (for example, a Next-compatible host or `npm run build` followed by `npm start`). The marketing pages are prerendered; the enquiry endpoint requires a server runtime, so a static-only export is not sufficient. Configure the environment and enquiry receiver before accepting live online briefs. No deployment is performed by this repository migration.
+Cloudflare Workers deployment is configured with the OpenNext adapter. See [Cloudflare deployment](docs/cloudflare.md) for authentication, build and deployment commands, runtime secrets, custom domains and launch checks. The enquiry endpoint requires a server runtime, so a static-only Pages upload is not sufficient. Configure the enquiry receiver before accepting live online briefs. Standard Node.js hosting with `npm run build` and `npm start` also remains available.
 
 `npm audit --omit=dev` checks runtime dependencies. The current Next.js lint toolchain has unpatched development-only advisories in the `fast-glob` → `micromatch` → `braces` chain. Keep the matched Next.js lint configuration and review upstream fixes rather than forcing npm's suggested framework downgrade. ESLint 9 is retained because the current lint plugins do not all declare support for ESLint 10.
